@@ -37,7 +37,7 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-let cards = document.querySelectorAll('.cards');
+let cards = document.querySelectorAll('ul.deck li');
 let container = document.querySelector('.deck');
 container.innerHTML = '';
 shuffledCards = shuffle(Array.from(cards));
