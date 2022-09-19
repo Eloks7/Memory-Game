@@ -42,17 +42,46 @@ let container = document.querySelector('.deck');
 container.innerHTML = '';
 shuffledCards = shuffle(Array.from(cards));
 let openCards = [];
+correctGuess = 0;
 
-
-for (card of shuffledCards) {
+for (let card of shuffledCards) {
+    card.className = 'card'; 
     container.appendChild(card);
 }
 
 
 container.addEventListener('click', function(e) {
     target = e.target;
-    if (target.classList.contains('card')) {
-        openCards.push(target);
-        target.classList.toggle('open');
+    if (target.classList.contains('card') && !openCards.includes(target)) {
+        if (!target.classList.contains('match') && openCards.length < 2) {
+            openCards.push(target);
+            target.classList.toggle('open');
+            // compare();
+        }
+    }
+    if (openCards.length == 2) {
+        compare();
+    }
+    if (correctGuess == 8) {
+        // Game Over
     }
 })
+
+function compare() {
+    card1 = openCards[0];
+    card2 = openCards[1];
+
+    if (card1.firstElementChild.className === card2.firstElementChild.className) {
+        correctGuess += 1;
+        card1.classList.add('match');
+        card2.classList.add('match');
+        openCards = [];
+    }
+    else {
+        setTimeout(function() {
+            openCards = [];
+            card1.classList.toggle('open');
+            card2.classList.toggle('open');
+        }, 1500)
+    }
+}
