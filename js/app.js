@@ -41,7 +41,18 @@ let cards = document.querySelectorAll('ul.deck li');
 let container = document.querySelector('.deck');
 container.innerHTML = '';
 shuffledCards = shuffle(Array.from(cards));
+let openCards = [];
+
 
 for (card of shuffledCards) {
     container.appendChild(card);
 }
+
+
+container.addEventListener('click', function(e) {
+    target = e.target;
+    if (target.classList.contains('card')) {
+        openCards.push(target);
+        target.classList.toggle('open');
+    }
+})
