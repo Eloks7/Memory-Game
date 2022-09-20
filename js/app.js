@@ -42,18 +42,31 @@ let container = document.querySelector('.deck');
 container.innerHTML = '';
 shuffledCards = shuffle(Array.from(cards));
 let openCards = [];
-correctGuess = 0;
+let correctGuess = 0;
 movesElement = document.querySelector('.moves');
 moves = 0;
 stars = document.querySelectorAll('ul.stars li');
+timer = document.querySelector('.timer');
+let counter;
+let time = 0;
+refresh = document.querySelector('.restart');
+modal = document.querySelector('.modal');
+
 // movesElement.textContent = moves;
 
-for (let card of shuffledCards) {
-    card.className = 'card'; 
-    container.appendChild(card);
+function shuffleCards() {
+    shuffledCards = shuffle(Array.from(cards));
+    for (let card of shuffledCards) {
+        card.className = 'card'; 
+        container.appendChild(card);
+    }
 }
+// for (let card of shuffledCards) {
+//     card.className = 'card'; 
+//     container.appendChild(card);
+// }
 
-
+shuffleCards();
 container.addEventListener('click', function(e) {
     target = e.target;
     if (target.classList.contains('card') && !openCards.includes(target)) {
@@ -62,17 +75,23 @@ container.addEventListener('click', function(e) {
             target.classList.toggle('open');
             moves += 1;
             movesElement.textContent = moves;
+            if (moves == 1) {
+                timing();
+            }
             // compare();
         }
     }
     rating();
-    
+
     if (openCards.length == 2) {
         compare();
     }
     if (correctGuess == 8) {
-        // Game Over
+        gameOver()
     }
+})
+refresh.addEventListener('click', function() {
+    restartGame();
 })
 
 function compare() {
@@ -90,7 +109,7 @@ function compare() {
             openCards = [];
             card1.classList.toggle('open');
             card2.classList.toggle('open');
-        }, 1500)
+        }, 1000)
     }
 }
 
@@ -101,7 +120,54 @@ function rating() {
     if (moves > 14) {
         stars[1].style.display = 'none';
     }
-    if (moves > 18) {
+    if (moves > 34) {
         stars[0].style.display = 'none';
     }
+}
+
+function incrementalDisplay() {
+    time += 1;
+    let mins = Math.floor(time / 60);
+    let secs = time % 60;
+
+    timer.textContent = `  Timer:- ${mins}:${secs}`; //Will update the timer
+
+}
+
+function timing() {
+    // let time = 0;
+    counter = setInterval(incrementalDisplay, 1000);
+}
+
+function stopTimer() {
+    clearInterval(counter)
+}
+
+function restartGame() {
+    correctGuess = 0;
+    //hideModal = document.querySelector('.modal');
+    moves = 0;
+    time = 0;
+    shuffleCards();
+    timer.textContent = '  Timer:- 0:0'
+    stopTimer();
+    if (!modal.classList.contains('hide')) {
+        modal.classList.add('hide')
+    }
+
+
+}
+
+function gameOver() {
+    stopTimer();
+    playTime = timer.textContent;
+    gameRating = document.querySelector('.stars');
+    finishTime = document.querySelector('.finish_time');
+    finalRating = document.querySelector('.final_rating');
+    totalMoves = document.querySelector('p.moves');
+
+    finalRating.innerHTML = `Your Rating ${gameRating.innerHTML}`;
+    finishTime.textContent = `Your play ${playTime}`;
+    totalMoves.textContent = `You moved ${moves} times`
+
 }
