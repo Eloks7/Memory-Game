@@ -45,6 +45,7 @@ let openCards = [];
 correctGuess = 0;
 movesElement = document.querySelector('.moves');
 moves = 0;
+stars = document.querySelectorAll('ul.stars li');
 // movesElement.textContent = moves;
 
 for (let card of shuffledCards) {
@@ -64,6 +65,8 @@ container.addEventListener('click', function(e) {
             // compare();
         }
     }
+    rating();
+    
     if (openCards.length == 2) {
         compare();
     }
@@ -88,5 +91,17 @@ function compare() {
             card1.classList.toggle('open');
             card2.classList.toggle('open');
         }, 1500)
+    }
+}
+
+function rating() {
+    if (moves > 9) {
+        stars[2].style.display = 'none';
+    }
+    if (moves > 14) {
+        stars[1].style.display = 'none';
+    }
+    if (moves > 18) {
+        stars[0].style.display = 'none';
     }
 }
