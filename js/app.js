@@ -50,7 +50,8 @@ timer = document.querySelector('.timer');
 let counter;
 let time = 0;
 refresh = document.querySelector('.restart');
-modal = document.querySelector('.modal');
+// modal = document.querySelector('.modal');
+popup = document.querySelector('div.modal');
 
 // movesElement.textContent = moves;
 
@@ -117,12 +118,10 @@ function rating() {
     if (moves > 9) {
         stars[2].style.display = 'none';
     }
-    if (moves > 14) {
+    if (moves > 34) {
         stars[1].style.display = 'none';
     }
-    if (moves > 34) {
-        stars[0].style.display = 'none';
-    }
+    
 }
 
 function incrementalDisplay() {
@@ -140,7 +139,7 @@ function timing() {
 }
 
 function stopTimer() {
-    clearInterval(counter)
+    clearInterval(counter);
 }
 
 function restartGame() {
@@ -151,15 +150,21 @@ function restartGame() {
     shuffleCards();
     timer.textContent = '  Timer:- 0:0'
     stopTimer();
-    if (!modal.classList.contains('hide')) {
-        modal.classList.add('hide')
-    }
-
+    // if (!modal.classList.contains('hide')) {
+    //     modal.classList.add('hide')
+    // }
+    popup.style.display = 'none';
+    stars[2].style.display = 'initial';
+    stars[1].style.display = 'initial';
+    movesElement.textContent = '0';
+    
 
 }
 
 function gameOver() {
     stopTimer();
+    // modal.classList.toggle('hide');
+    popup.style.display = 'flex';
     playTime = timer.textContent;
     gameRating = document.querySelector('.stars');
     finishTime = document.querySelector('.finish_time');
@@ -168,6 +173,11 @@ function gameOver() {
 
     finalRating.innerHTML = `Your Rating ${gameRating.innerHTML}`;
     finishTime.textContent = `Your play ${playTime}`;
-    totalMoves.textContent = `You moved ${moves} times`
+    totalMoves.textContent = `You moved ${moves} times`;
+
+    repeat = document.querySelector('p.restart');
+    repeat.addEventListener('click', function() {
+        restartGame();
+    })
 
 }

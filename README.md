@@ -23,3 +23,8 @@ For specific, detailed instructions, look at the project instructions in the [Ud
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## How to Play
+
+To play this game you'll need to clone this repository locally as it is not hosted anywhere yet.
+Open the address for index.html in your browser and enjoy the game.
