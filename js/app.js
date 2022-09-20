@@ -43,6 +43,9 @@ container.innerHTML = '';
 shuffledCards = shuffle(Array.from(cards));
 let openCards = [];
 correctGuess = 0;
+movesElement = document.querySelector('.moves');
+moves = 0;
+// movesElement.textContent = moves;
 
 for (let card of shuffledCards) {
     card.className = 'card'; 
@@ -56,6 +59,8 @@ container.addEventListener('click', function(e) {
         if (!target.classList.contains('match') && openCards.length < 2) {
             openCards.push(target);
             target.classList.toggle('open');
+            moves += 1;
+            movesElement.textContent = moves;
             // compare();
         }
     }
