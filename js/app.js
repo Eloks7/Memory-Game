@@ -76,7 +76,7 @@ container.addEventListener('click', function(e) {
             target.classList.toggle('open');
             moves += 1;
             movesElement.textContent = moves;
-            if (moves == 1) {
+            if (moves === 1) {
                 timing();
             }
             // compare();
@@ -84,10 +84,10 @@ container.addEventListener('click', function(e) {
     }
     rating();
 
-    if (openCards.length == 2) {
+    if (openCards.length === 2) {
         compare();
     }
-    if (correctGuess == 8) {
+    if (correctGuess === 8) {
         gameOver()
     }
 })
